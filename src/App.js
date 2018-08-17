@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import TaskForm from './components/TaskForm'
-import SearchSort from './components/SeachSort';
+import Control from './components/Control';
 
 class App extends Component {
   render() {
@@ -28,10 +28,8 @@ class App extends Component {
             </div>
 
             <div className="row mt-15 ">  
-              <SearchSort/>
-              
+              <Control/>  
             </div>
-            
             
             <div className="row mt-15">
                      
