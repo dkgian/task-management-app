@@ -38,3 +38,12 @@
 .mt-15{
   margin-top: 15px;
 }
+
+.task-item button{
+  height: 30px;
+  width: 80px;
+}
+
+.text-center{
+  text-align: right;
+}
