@@ -10,17 +10,44 @@ class App extends Component {
     super(props);
     this.state = {
       isDisplayForm : false,
-      tasks : []
+      tasks : [] //id, name, status
     }
   }
 
   onToogleForm = () =>{
-    console.log('1');
     this.setState({
       tasks : [],
       isDisplayForm : !this.state.isDisplayForm
     })
-    console.log(this.state.isDisplayForm);
+    //console.log(this.state.isDisplayForm);
+  }
+
+  onGenerateData = () =>{
+    var tasks = [
+      {
+        id: this.genId(),
+        name: 'task1',
+        status: true
+      },
+      {
+        id: this.genId(),
+        name: 'task2',
+        status: false
+      },
+      {
+        id: this.genId(),
+        name: 'task3',
+        status: true
+      }
+    ]
+    console.log(tasks)
+  }
+
+  s4 = ()=>{
+    return Math.floor((1+Math.random())*0x10000).toString(16).substring(1);
+  }
+  genId = () => {
+    return this.s4() +'-'+ this.s4() + '-' + this.s4() + '-' + this.s4();
   }
 
   render() {
@@ -51,6 +78,15 @@ class App extends Component {
                   >
                    <i className="fas fa-plus"></i> Add a task
                 </button>
+                &nbsp;
+                <button 
+                  type="button" 
+                  className="btn btn-danger float-left"
+                  onClick={this.onGenerateData}
+                  >
+                  Generate Data
+                </button>
+                
             </div>
 
             <div className="row mt-15 ">  

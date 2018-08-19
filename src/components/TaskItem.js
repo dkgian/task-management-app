@@ -3,7 +3,13 @@ import '../App.css';
 
 
 class TaskItem extends Component {
-  
+  constructor(props){
+    super(props);
+    this.state = {
+        name: 'dd',
+        status: false
+    }
+  }
 
   render() {
     return ( 
