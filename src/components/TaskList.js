@@ -16,6 +16,7 @@ class TaskList extends Component {
           key = {task.id}
           index = {index}
           task = {task}
+          onUpdateStatus = {this.props.onUpdateStatus}
         />
       )
     })
@@ -48,7 +49,7 @@ class TaskList extends Component {
                 >
                 <option value="2">All</option>
                 <option value="1">Active</option>
-                <option value="0">Hidden</option>
+                <option value="0">Deactive</option>
               </select>   
             </td>
             <td></td>    

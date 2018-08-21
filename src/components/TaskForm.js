@@ -78,9 +78,7 @@ class Taskform extends Component {
               </form>
               
             </div>
-        </div>
-        
-      
+        </div>    
     );
   }
 }

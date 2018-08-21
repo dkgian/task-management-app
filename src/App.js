@@ -19,7 +19,7 @@ class App extends Component {
       isDisplayForm : !this.state.isDisplayForm
     })
     //console.log(this.state.isDisplayForm);
-    this.onGenerateData = this.onGenerateData.bind(this);
+    //this.onGenerateData = this.onGenerateData.bind(this);
   }
 
   onSubmit = (data) =>{
@@ -34,32 +34,58 @@ class App extends Component {
     localStorage.setItem('tasks',JSON.stringify(tasks))
   }
 
-  onGenerateData = () =>{
-    var tasks = [
-      {
-        id: this.genId(),
-        name: 'Task 1',
-        status: true
-      },
-      {
-        id: this.genId(),
-        name: 'Task 2',
-        status: false
-      },
-      {
-        id: this.genId(),
-        name: 'Task 3',
-        status: true
-      }
-    ]
+  onUpdateStatus =(id)=>{
+    let {tasks} = this.state
+    var index = this.findIndex(id);
+    console.log(index)
+    if(index !== -1){
+      tasks[index].status = !tasks[index].status
+      this.setState({
+        tasks: tasks
+      })
 
-    this.setState({
-      tasks : tasks
-    });
-
-    localStorage.setItem('tasks',JSON.stringify(tasks));
-    
+      console.log(index)
+    }
+    localStorage.setItem('tasks',JSON.stringify(tasks))
   }
+
+  findIndex = (id) =>{
+    let {tasks} = this.state;
+    var result = -1
+    tasks.forEach((task,index)=>{
+      if(task.id === id){
+        //console.log(index)
+        result = index
+      }
+    })
+    return result;
+  }
+  // onGenerateData = () =>{
+  //   var tasks = [
+  //     {
+  //       id: this.genId(),
+  //       name: 'Task 1',
+  //       status: true
+  //     },
+  //     {
+  //       id: this.genId(),
+  //       name: 'Task 2',
+  //       status: false
+  //     },
+  //     {
+  //       id: this.genId(),
+  //       name: 'Task 3',
+  //       status: true
+  //     }
+  //   ]
+
+  //   this.setState({
+  //     tasks : tasks
+  //   });
+
+  //   localStorage.setItem('tasks',JSON.stringify(tasks));
+    
+  // }
 
   //this func runs before page is reloaded
   componentWillMount(){
@@ -110,14 +136,14 @@ class App extends Component {
                   >
                    <i className="fas fa-plus"></i> Add a task
                 </button>
-                &nbsp;
-                <button 
+                
+                {/* <button 
                   type="button" 
                   className="btn btn-danger float-left"
                   onClick={this.onGenerateData}
                   >
                   Generate Data
-                </button>
+                </button> */}
                 
             </div>
 
@@ -130,6 +156,7 @@ class App extends Component {
               <TaskList 
                 //tasks = {localStorage.getItem('tasks')}
                 tasks = {tasks}
+                onUpdateStatus = { this.onUpdateStatus }
               />
         
             </div>
