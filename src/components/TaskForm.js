@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 
 class Taskform extends Component {
-  
+
   constructor(props){
     super(props);
     this.state = {
@@ -14,26 +14,20 @@ class Taskform extends Component {
   onChange = (event) => {
     let name = event.target.name;
     let value = event.target.value;
+
+    if(name === "status"){
+      value = event.target.value === 'true'? true:false
+    }
     this.setState({
       [name] : value
     })
-    //console.log(name, value)
   }
 
   onSubmit = (event) => {
     event.preventDefault();
-    //console.log(this.state.name , this.state.status)
-
-    const taskObj = {
-      name : this.state.name,
-      status : this.state.status
-    }
-    this.props.onAddTask(taskObj)
-
-    this.setState({
-      name : '',
-      status: false
-    })
+    //Cast boolean before passing to App
+    //this.props.onSubmit(this.state.name, this.state.status === "true"? true:false);
+    this.props.onSubmit(this.state)
   }
 
 
@@ -50,15 +44,15 @@ class Taskform extends Component {
             </div>
 
             <div className="panel-body">
-              <form >
+              <form onSubmit={this.onsubmit} >
                 <div className="form-group">
                   <label className="float-left">Task name:</label>
                   <input 
                     type="text" 
                     className="form-control" 
                     name = "name"
-                    value = {this.state.name}
-                    onChange = {this.onChange}
+                    value = { this.state.name }
+                    onChange = { this.onChange }
                   />
                 </div>
                 
@@ -71,12 +65,12 @@ class Taskform extends Component {
                   className ="form-control" 
                   required="required"
                 >
-                  <option value={true}>Active</option>
-                  <option value={false}>Deactive</option>
+                  <option value={true}> Active </option>
+                  <option value={false}> Deactive </option>
                 </select>
 
                 <button 
-                  onClick = { this.onSubmit }
+                  onClick = {this.onSubmit}
                   type="submit" 
                   className="btn btn-default mt-15">Save</button>
                 &nbsp;

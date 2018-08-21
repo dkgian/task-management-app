@@ -22,18 +22,16 @@ class App extends Component {
     this.onGenerateData = this.onGenerateData.bind(this);
   }
 
-  onAddTask = (param) =>{
-    let newTask = {
-      id: this.genId(),
-      name: param.name,
-      status: param.status
-    }
+  onSubmit = (data) =>{
+    let {tasks} = this.state;
+    data.id = this.genId();
     
+    tasks.push(data);
     this.setState({
-      tasks : this.state.tasks.push(newTask)
+      tasks : tasks,
+      isDisplayForm: false
     })
-
-    console.log(this.state.tasks)
+    localStorage.setItem('tasks',JSON.stringify(tasks))
   }
 
   onGenerateData = () =>{
@@ -83,7 +81,12 @@ class App extends Component {
 
   render() {
     let { tasks, isDisplayForm } = this.state;
-    let elmTaskform  = isDisplayForm? <TaskForm onCloseForm ={this.onToogleForm} /> : '';
+    let elmTaskform  = isDisplayForm? 
+                      <TaskForm 
+                        onCloseForm ={this.onToogleForm} 
+                        onSubmit = {this.onSubmit}
+                      /> 
+                      : '';
 
     return ( 
       <div className="App container">
