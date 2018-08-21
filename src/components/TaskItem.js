@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
 import '../App.css';
 
-
 class TaskItem extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-        name: 'dd',
-        status: false
-    }
-  }
 
   render() {
+    let { task, index } = this.props;
+
     return ( 
         <tr className="task-item">
-            <td>1</td>
-            <td>Upload to Git</td>
-            <td>Active</td>
+            <td>{index+1}</td>
+            <td>{task.name}</td>
+            <td className="item-center">
+              <span 
+                className={ task.status === true? 'label label-success': 'label label-danger'}>
+                          { task.status === true? 'Active' : 'Deactive'}
+              </span>        
+            </td>
             <td>        
             <button type="button" className="btn btn-warning"> <i className="fas fa-edit"></i> Edit</button>
             &nbsp;

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 
 class Taskform extends Component {
+  
   constructor(props){
     super(props);
     this.state = {
@@ -21,7 +22,14 @@ class Taskform extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state.name , this.state.status)
+    //console.log(this.state.name , this.state.status)
+
+    const taskObj = {
+      name : this.state.name,
+      status : this.state.status
+    }
+    this.props.onAddTask(taskObj)
+
     this.setState({
       name : '',
       status: false
@@ -36,7 +44,7 @@ class Taskform extends Component {
               <h3 className="panel-title">Add task
                 <span 
                 style = { {cursor:'pointer'} }
-                onClick = { this.props.onToogleForm }
+                onClick = { this.props.onCloseForm }
                 className="fa fa-times-circle float-right"></span>
               </h3>
             </div>

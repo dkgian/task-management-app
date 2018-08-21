@@ -10,37 +10,68 @@ class App extends Component {
     super(props);
     this.state = {
       isDisplayForm : false,
-      tasks : [] //id, name, status
+      tasks : [] //id, name, status, 
     }
   }
 
   onToogleForm = () =>{
     this.setState({
-      tasks : [],
       isDisplayForm : !this.state.isDisplayForm
     })
     //console.log(this.state.isDisplayForm);
+    this.onGenerateData = this.onGenerateData.bind(this);
+  }
+
+  onAddTask = (param) =>{
+    let newTask = {
+      id: this.genId(),
+      name: param.name,
+      status: param.status
+    }
+    
+    this.setState({
+      tasks : this.state.tasks.push(newTask)
+    })
+
+    console.log(this.state.tasks)
   }
 
   onGenerateData = () =>{
     var tasks = [
       {
         id: this.genId(),
-        name: 'task1',
+        name: 'Task 1',
         status: true
       },
       {
         id: this.genId(),
-        name: 'task2',
+        name: 'Task 2',
         status: false
       },
       {
         id: this.genId(),
-        name: 'task3',
+        name: 'Task 3',
         status: true
       }
     ]
-    console.log(tasks)
+
+    this.setState({
+      tasks : tasks
+    });
+
+    localStorage.setItem('tasks',JSON.stringify(tasks));
+    
+  }
+
+  //this func runs before page is reloaded
+  componentWillMount(){
+    //check and get back data from Localstorage
+    if(localStorage && localStorage.getItem('tasks')){
+      var tasks = JSON.parse(localStorage.getItem('tasks'));
+      this.setState({
+        tasks : tasks
+      })
+    }
   }
 
   s4 = ()=>{
@@ -52,7 +83,7 @@ class App extends Component {
 
   render() {
     let { tasks, isDisplayForm } = this.state;
-    let elmTaskform  = isDisplayForm? <TaskForm/> : '';
+    let elmTaskform  = isDisplayForm? <TaskForm onCloseForm ={this.onToogleForm} /> : '';
 
     return ( 
       <div className="App container">
@@ -62,10 +93,8 @@ class App extends Component {
         </div>
 
         <div className="row">
-          <div className={ this.state.isDisplayForm ? 'col-xs-4 col-sm-4 col-md-4 col-lg-4': 'collapse'}>
-            <TaskForm
-              onToogleForm = { this.onToogleForm }
-            />
+          <div className={ this.state.isDisplayForm ? 'col-xs-4 col-sm-4 col-md-4 col-lg-4': ''}>
+          {elmTaskform}
           </div>       
 
           <div className={ this.state.isDisplayForm ? 'col-xs-8 col-sm-8 col-md-8 col-lg-8' : 'col-xs-12 col-sm-12 col-md-12 col-lg-12'}>
@@ -95,7 +124,10 @@ class App extends Component {
             
             <div className="row mt-15">
                      
-              <TaskList />
+              <TaskList 
+                //tasks = {localStorage.getItem('tasks')}
+                tasks = {tasks}
+              />
         
             </div>
           </div>         
