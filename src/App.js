@@ -36,17 +36,31 @@ class App extends Component {
 
   onUpdateStatus =(id)=>{
     let {tasks} = this.state
-    var index = this.findIndex(id);
-    console.log(index)
+    let index = this.findIndex(id);
+    //console.log(index)
     if(index !== -1){
       tasks[index].status = !tasks[index].status
       this.setState({
         tasks: tasks
       })
-
-      console.log(index)
     }
     localStorage.setItem('tasks',JSON.stringify(tasks))
+  }
+
+  onDeleteTask = (id) =>{
+    let {tasks} = this.state;
+    let index = this.findIndex(id);
+    let confirmDelete = this.warningPopup(tasks[index].name)
+    if(confirmDelete){
+      tasks.splice(index,1)
+    this.setState({
+      tasks : tasks
+    })
+
+    localStorage.setItem('tasks', JSON.stringify(tasks))
+    }else{
+      console.log("nothing happened")
+    }
   }
 
   findIndex = (id) =>{
@@ -59,6 +73,14 @@ class App extends Component {
       }
     })
     return result;
+  }
+
+  warningPopup = (taskName) =>{
+    var confirm = false
+    if(window.confirm(`Delete "${taskName}", sure?`)){
+      confirm = true
+    }
+    return confirm
   }
   // onGenerateData = () =>{
   //   var tasks = [
@@ -157,6 +179,7 @@ class App extends Component {
                 //tasks = {localStorage.getItem('tasks')}
                 tasks = {tasks}
                 onUpdateStatus = { this.onUpdateStatus }
+                onDeleteTask = { this.onDeleteTask }
               />
         
             </div>
