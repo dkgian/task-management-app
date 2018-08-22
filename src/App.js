@@ -10,7 +10,8 @@ class App extends Component {
     super(props);
     this.state = {
       isDisplayForm : false,
-      tasks : [] //id, name, status, 
+      tasks : [], //id, name, status, 
+      taskEditing : null
     }
   }
 
@@ -22,22 +23,42 @@ class App extends Component {
     //this.onGenerateData = this.onGenerateData.bind(this);
   }
 
+  onShowForm = ()=>{
+    this.setState({
+      isDisplayForm : true
+    })
+  }
+
+  onCloseForm = ()=>{
+    this.setState({
+      isDisplayForm : false,
+      taskEditing : null
+    })
+  }
+
   onSubmit = (data) =>{
     let {tasks} = this.state;
-    data.id = this.genId();
-    
-    tasks.push(data);
+
+    if(data.id === ''){
+      data.id = this.genId();
+      tasks.push(data);
+     
+    }else{
+      let index = this.findIndex(data.id);
+      tasks[index] = data;
+     
+    }
+
     this.setState({
       tasks : tasks,
       isDisplayForm: false
     })
-    localStorage.setItem('tasks',JSON.stringify(tasks))
+    localStorage.setItem('tasks',JSON.stringify(tasks))   
   }
 
   onUpdateStatus =(id)=>{
     let {tasks} = this.state
     let index = this.findIndex(id);
-    //console.log(index)
     if(index !== -1){
       tasks[index].status = !tasks[index].status
       this.setState({
@@ -63,6 +84,18 @@ class App extends Component {
     }
   }
 
+  onUpdate = (id) =>{
+    let {tasks} = this.state
+    let index = this.findIndex(id)
+    let taskEditing = tasks[index];
+    this.setState({
+      taskEditing : taskEditing
+    });
+
+    this.onShowForm()
+
+  }
+
   findIndex = (id) =>{
     let {tasks} = this.state;
     var result = -1
@@ -74,6 +107,8 @@ class App extends Component {
     })
     return result;
   }
+
+  
 
   warningPopup = (taskName) =>{
     var confirm = false
@@ -128,11 +163,12 @@ class App extends Component {
   }
 
   render() {
-    let { tasks, isDisplayForm } = this.state;
+    let { tasks, isDisplayForm, taskEditing } = this.state;
     let elmTaskform  = isDisplayForm? 
                       <TaskForm 
                         onCloseForm ={this.onToogleForm} 
                         onSubmit = {this.onSubmit}
+                        taskEditing = {taskEditing}
                       /> 
                       : '';
 
@@ -180,6 +216,7 @@ class App extends Component {
                 tasks = {tasks}
                 onUpdateStatus = { this.onUpdateStatus }
                 onDeleteTask = { this.onDeleteTask }
+                onUpdate = {this.onUpdate}
               />
         
             </div>

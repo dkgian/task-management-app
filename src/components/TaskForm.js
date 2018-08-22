@@ -6,9 +6,21 @@ class Taskform extends Component {
   constructor(props){
     super(props);
     this.state = {
-      name : '',
+      id    : '',
+      name  : '',
       status: false
     }
+  }
+
+  componentWillMount = ()=>{
+    if(this.props.taskEditing){
+      this.setState({
+        id     : this.props.taskEditing.id,
+        name   : this.props.taskEditing.name,
+        status : this.props.taskEditing.statuss
+      });
+    }
+    
   }
 
   onChange = (event) => {
@@ -32,10 +44,12 @@ class Taskform extends Component {
 
 
   render() {
+    let {id} = this.state;
     return (
         <div className="panel panel-warning">
             <div className="panel-heading">
-              <h3 className="panel-title">Add task
+              <h3 className="panel-title">
+                { id !== '' ? 'Edit Task': 'Add Task' }
                 <span 
                 style = { {cursor:'pointer'} }
                 onClick = { this.props.onCloseForm }
@@ -72,9 +86,9 @@ class Taskform extends Component {
                 <button 
                   onClick = {this.onSubmit}
                   type="submit" 
-                  className="btn btn-default mt-15">Save</button>
+                  className="btn btn-success mt-15">Save</button>
                 &nbsp;
-                <button type="reset" className="btn btn-default mt-15">Clear</button>
+                <button type="reset" className="btn btn-danger mt-15">Clear</button>
               </form>
               
             </div>

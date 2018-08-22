@@ -11,6 +11,10 @@ class TaskItem extends Component {
     this.props.onDeleteTask(this.props.task.id)
   }
 
+  onUpdate = () =>{
+    this.props.onUpdate(this.props.task.id)
+  }
+
   render() {
     let { task, index } = this.props;
 
@@ -24,11 +28,17 @@ class TaskItem extends Component {
               className={ task.status === true? 'label label-success': 'label label-danger'}
               onClick = {this.onUpdateStatus}
             >
-                        { task.status === true? 'Active' : 'Deactive'}
+              { task.status === true? 'Active' : 'Deactive'}
             </span>        
           </td>
           <td>        
-          <button type="button" className="btn btn-warning"> <i className="fas fa-edit"></i> Edit</button>
+          <button 
+            type="button" 
+            className="btn btn-warning"
+            onClick = { this.onUpdate }
+          > 
+            <i className="fas fa-edit"></i> Edit
+          </button>
           &nbsp;
           <button 
             type="button" 
