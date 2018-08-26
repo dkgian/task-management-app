@@ -4,12 +4,36 @@ import TaskItem from './TaskItem';
 
 
 class TaskList extends Component {
-  
+   
+  constructor(props){
+    super(props);
+    this.state = {
+      filterName: '',
+      filterStatus: -1  // -1:all, 1: active, 0: deactive
+    }
+  }
+
+  onChange = (event)=>{
+    let name = event.target.name;
+    let value = event.target.value;
+    let {filterName, filterStatus} = this.state;
+
+    this.props.onFilter(
+      name === 'filterName'? value : filterName,
+      name === 'filterStatus'? value : filterStatus)
+
+    this.setState({
+      [name]: value //setState filterName, filterStatus
+    })
+
+
+  }
+
   render() {
     //var tasks = JSON.parse(this.props.tasks);
     let {tasks} = this.props;
-    //console.log(tasks)
-
+    let {filterName, filterStatus} = this.setState;
+  
     var elmTaskItems = tasks.map((task,index)=>{
       return (
         <TaskItem
@@ -39,17 +63,21 @@ class TaskList extends Component {
             <td> 
               <input 
                 type="text" 
-                name="txtFilter"
+                name="filterName"
                 className="form-control"
                 placeholder="#Quick search by name"
+                value = {filterName}
+                onChange = { this.onChange }
                 />
             </td>
             <td>   
               <select 
-                name="sltStatus"
+                name="filterStatus"
                 className="form-control" 
+                value = {filterStatus}
+                onChange = { this.onChange }
                 >
-                <option value="2">All</option>
+                <option value="-1">All</option>
                 <option value="1">Active</option>
                 <option value="0">Deactive</option>
               </select>   

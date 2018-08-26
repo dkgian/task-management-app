@@ -11,7 +11,11 @@ class App extends Component {
     this.state = {
       isDisplayForm : false,
       tasks : [], //id, name, status, 
-      taskEditing : null
+      taskEditing : null,
+      filter: {
+        name:'',
+        status: -1
+      }
     }
   }
 
@@ -101,6 +105,16 @@ class App extends Component {
     this.onShowForm()
   }
 
+  onFilter = (filterName, filterStatus)=>{
+    filterStatus = parseInt(filterStatus, 10) //decimal parsing
+    this.setState({
+      filter:{
+        name: filterName.toLowerCase(),
+        status: filterStatus
+      }
+    })
+  }
+
   findIndex = (id) =>{
     let {tasks} = this.state;
     var result = -1
@@ -158,7 +172,7 @@ class App extends Component {
     }
   }
 
-  s4 = ()=>{
+s4 = ()=>{
     return Math.floor((1+Math.random())*0x10000).toString(16).substring(1);
   }
   genId = () => {
@@ -166,7 +180,27 @@ class App extends Component {
   }
 
   render() {
-    let { tasks, isDisplayForm, taskEditing } = this.state;
+    let { tasks, isDisplayForm, taskEditing, filter } = this.state;
+    //quick filter function
+    
+    if(filter){
+      //filter by name
+      if(filter.name){
+        tasks = tasks.filter((task)=>{
+          return task.name.toLowerCase().indexOf(filter.name) !== -1 //-1: not found match keys
+        })
+      }
+      //filter by status
+      if(filter.status){
+        tasks = tasks.filter((task)=>{
+          if(filter.status === -1){
+            return task
+          }else{
+            return task.status === (filter.status === 1 ? true:false)
+          }
+        })
+      }
+    }
     let elmTaskform  = isDisplayForm? 
                       <TaskForm 
                         onCloseForm ={this.onToogleForm} 
@@ -220,6 +254,7 @@ class App extends Component {
                 onUpdateStatus = { this.onUpdateStatus }
                 onDeleteTask = { this.onDeleteTask }
                 onUpdate = {this.onUpdate}
+                onFilter = {this.onFilter}
               />
         
             </div>
