@@ -16,11 +16,17 @@ class App extends Component {
   }
 
   onToogleForm = () =>{
-    this.setState({
-      isDisplayForm : !this.state.isDisplayForm
-    })
-    //console.log(this.state.isDisplayForm);
-    //this.onGenerateData = this.onGenerateData.bind(this);
+    if(this.state.isDisplayForm && this.state.taskEditing !== null){
+      this.setState({
+        isDisplayForm : true,
+        taskEditing : null
+      })
+    }else{
+      this.setState({
+        isDisplayForm : !this.state.isDisplayForm,
+        taskEditing : null
+      })
+    }
   }
 
   onShowForm = ()=>{
@@ -39,19 +45,19 @@ class App extends Component {
   onSubmit = (data) =>{
     let {tasks} = this.state;
 
-    if(data.id === ''){
+    if(data.id === ''){ // add new
       data.id = this.genId();
       tasks.push(data);
      
     }else{
-      let index = this.findIndex(data.id);
+      let index = this.findIndex(data.id); //edit 
       tasks[index] = data;
-     
     }
 
     this.setState({
       tasks : tasks,
-      isDisplayForm: false
+      isDisplayForm: false,
+      taskEditing : null
     })
     localStorage.setItem('tasks',JSON.stringify(tasks))   
   }
@@ -93,7 +99,6 @@ class App extends Component {
     });
 
     this.onShowForm()
-
   }
 
   findIndex = (id) =>{
@@ -107,8 +112,6 @@ class App extends Component {
     })
     return result;
   }
-
-  
 
   warningPopup = (taskName) =>{
     var confirm = false
@@ -144,7 +147,7 @@ class App extends Component {
     
   // }
 
-  //this func runs before page is reloaded
+  //this func runs before the component is mounted
   componentWillMount(){
     //check and get back data from Localstorage
     if(localStorage && localStorage.getItem('tasks')){

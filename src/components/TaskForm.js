@@ -13,14 +13,29 @@ class Taskform extends Component {
   }
 
   componentWillMount = ()=>{
-    if(this.props.taskEditing){
+    if(this.props.taskEditing !== null){
       this.setState({
         id     : this.props.taskEditing.id,
         name   : this.props.taskEditing.name,
-        status : this.props.taskEditing.statuss
+        status : this.props.taskEditing.status
       });
     }
-    
+  }
+
+  componentWillReceiveProps=(nextProps)=>{
+    if(nextProps && nextProps.taskEditing){
+      this.setState({
+        id     : nextProps.taskEditing.id,
+        name   : nextProps.taskEditing.name,
+        status : nextProps.taskEditing.status
+      });
+    }else if(nextProps && nextProps.taskEditing === null){ //case: Edit->Add
+      this.setState({
+        id    : '',
+        name  : '',
+        status: false
+      })
+    }
   }
 
   onChange = (event) => {
