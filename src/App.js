@@ -191,15 +191,13 @@ s4 = ()=>{
         })
       }
       //filter by status
-      if(filter.status){
-        tasks = tasks.filter((task)=>{
-          if(filter.status === -1){
-            return task
-          }else{
-            return task.status === (filter.status === 1 ? true:false)
-          }
-        })
-      }
+      tasks = tasks.filter((task)=>{
+        if(filter.status === -1){
+          return task
+        }else{
+          return task.status === (filter.status === 1 ? true : false)
+        }
+      })
     }
     let elmTaskform  = isDisplayForm? 
                       <TaskForm 
