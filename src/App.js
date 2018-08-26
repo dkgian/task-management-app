@@ -15,7 +15,8 @@ class App extends Component {
       filter: {
         name:'',
         status: -1
-      }
+      },
+      keyword: ''
     }
   }
 
@@ -115,6 +116,12 @@ class App extends Component {
     })
   }
 
+  onSearch = (keyword)=>{
+    this.setState({
+      keyword : keyword
+    })
+  }
+
   findIndex = (id) =>{
     let {tasks} = this.state;
     var result = -1
@@ -172,7 +179,7 @@ class App extends Component {
     }
   }
 
-s4 = ()=>{
+  s4 = ()=>{
     return Math.floor((1+Math.random())*0x10000).toString(16).substring(1);
   }
   genId = () => {
@@ -180,9 +187,9 @@ s4 = ()=>{
   }
 
   render() {
-    let { tasks, isDisplayForm, taskEditing, filter } = this.state;
-    //quick filter function
+    let { tasks, isDisplayForm, taskEditing, filter, keyword } = this.state;
     
+    //quick filter function by Name /Status
     if(filter){
       //filter by name
       if(filter.name){
@@ -197,6 +204,13 @@ s4 = ()=>{
         }else{
           return task.status === (filter.status === 1 ? true : false)
         }
+      })
+    }
+
+    //Search by Keyword
+    if(keyword){
+      tasks = tasks.filter((task)=>{
+        return task.name.toLowerCase().indexOf(keyword) !== -1;
       })
     }
     let elmTaskform  = isDisplayForm? 
@@ -241,7 +255,9 @@ s4 = ()=>{
             </div>
 
             <div className="row mt-15 ">  
-              <Control/>  
+              <Control
+                onSearch = {this.onSearch}
+                />  
             </div>
             
             <div className="row mt-15">
