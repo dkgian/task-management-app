@@ -16,7 +16,9 @@ class App extends Component {
         name:'',
         status: -1
       },
-      keyword: ''
+      keyword: '',
+      sortBy: 'name',
+      sortValue: 1
     }
   }
 
@@ -122,6 +124,15 @@ class App extends Component {
     })
   }
 
+  onSort = (sortBy, sortValue)=>{
+    this.setState({
+      sortBy,
+      sortValue
+    })
+    //console.log(this.state.sortBy + this.state.sortValue)
+
+  }
+
   findIndex = (id) =>{
     let {tasks} = this.state;
     var result = -1
@@ -187,7 +198,14 @@ class App extends Component {
   }
 
   render() {
-    let { tasks, isDisplayForm, taskEditing, filter, keyword } = this.state;
+    let { 
+      tasks, 
+      isDisplayForm, 
+      taskEditing, 
+      filter, 
+      keyword,
+      sortBy,
+      sortValue } = this.state;
     
     //quick filter function by Name /Status
     if(filter){
@@ -213,6 +231,22 @@ class App extends Component {
         return task.name.toLowerCase().indexOf(keyword) !== -1;
       })
     }
+
+    //Sort items
+       if(sortBy === 'name'){ //byName
+         tasks.sort((a,b)=>{
+           if(a.name > b.name) return sortValue
+           else if(a.name < b.name) return -sortValue
+           else return 0
+         })
+       }else{
+        tasks.sort((a,b)=>{ //byStatus
+          if(a.status > b.status) return -sortValue
+          else if(a.status < b.status) return sortValue
+          else return 0
+        })
+       }
+
     let elmTaskform  = isDisplayForm? 
                       <TaskForm 
                         onCloseForm ={this.onToogleForm} 
@@ -257,6 +291,9 @@ class App extends Component {
             <div className="row mt-15 ">  
               <Control
                 onSearch = {this.onSearch}
+                onSort = { this.onSort }
+                sortBy = { sortBy}
+                sortValue = { sortValue}
                 />  
             </div>
             

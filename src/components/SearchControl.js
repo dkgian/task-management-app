@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 
  
-class Search extends Component {
+class SearchControl extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -46,7 +46,7 @@ class Search extends Component {
                 </span>
             </div> 
         );
-  }
+    }
 }
 
-export default Search;
+export default SearchControl;

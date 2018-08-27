@@ -12,6 +12,8 @@ class Taskform extends Component {
     }
   }
 
+
+  //edit mode: load edited item to Component
   componentWillMount = ()=>{
     if(this.props.taskEditing !== null){
       this.setState({
@@ -22,6 +24,7 @@ class Taskform extends Component {
     }
   }
 
+  //check props whether editmode or addnew mode for choose data to load into form
   componentWillReceiveProps=(nextProps)=>{
     if(nextProps && nextProps.taskEditing){
       this.setState({

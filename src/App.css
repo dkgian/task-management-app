@@ -47,3 +47,12 @@
 .item-center{
   align-items: center
 }
+
+.sort_selected::after{
+  content: "\f00c";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    
+}
