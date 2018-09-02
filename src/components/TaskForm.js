@@ -45,6 +45,9 @@ class Taskform extends Component {
     }
   }
 
+  onCloseForm = ()=>{
+    this.props.onCloseForm();
+  }
   onChange = (event) => {
     let name = event.target.name;
     let value = event.target.value;
@@ -63,7 +66,7 @@ class Taskform extends Component {
     //this.props.onSubmit(this.state.name, this.state.status === "true"? true:false);
     
     this.props.onAddTask(this.state);
-    this.props.onCloseForm();
+    this.onCloseForm();
   }
 
 
@@ -76,7 +79,7 @@ class Taskform extends Component {
                 { id !== '' ? 'Edit Task': 'Add Task' }
                 <span 
                 style = { {cursor:'pointer'} }
-                onClick = { this.props.onCloseForm }
+                onClick = { this.onCloseForm}
                 className="fa fa-times-circle float-right"></span>
               </h3>
             </div>
@@ -131,6 +134,9 @@ const mapDispatchToProps = (dispatch, props)=>{
   return {
     onAddTask : (task)=>{
       dispatch(actions.addTask(task));
+    },
+    onCloseForm : ()=>{
+      dispatch(actions.closeForm());
     }
   }
 }

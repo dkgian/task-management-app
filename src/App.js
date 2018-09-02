@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import { connect } from 'react-redux'
+
 import TaskForm from './components/TaskForm'
 import Control from './components/Control';
 import TaskList from './components/TaskList';
+
+import * as actions from './actions/index'
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      isDisplayForm : false,
+      //isDisplayForm : false,
       //tasks : [], //id, name, status, 
       taskEditing : null,
       filter: {
@@ -22,18 +26,19 @@ class App extends Component {
     }
   }
 
-  onToogleForm = () =>{
-    if(this.state.isDisplayForm && this.state.taskEditing !== null){
-      this.setState({
-        isDisplayForm : true,
-        taskEditing : null
-      })
-    }else{
-      this.setState({
-        isDisplayForm : !this.state.isDisplayForm,
-        taskEditing : null
-      })
-    }
+  onToggleForm = () =>{
+    // if(this.state.isDisplayForm && this.state.taskEditing !== null){
+    //   this.setState({
+    //     isDisplayForm : true,
+    //     taskEditing : null
+    //   })
+    // }else{
+    //   this.setState({
+    //     isDisplayForm : !this.state.isDisplayForm,
+    //     taskEditing : null
+    //   })
+    // }
+    this.props.onToggleForm();
   }
 
   onShowForm = ()=>{
@@ -42,32 +47,32 @@ class App extends Component {
     })
   }
 
-  onCloseForm = ()=>{
-    this.setState({
-      isDisplayForm : false,
-      taskEditing : null
-    })
-  }
+  // onCloseForm = ()=>{
+  //   this.setState({
+  //     isDisplayForm : false,
+  //     taskEditing : null
+  //   })
+  // }
 
-  onSubmit = (data) =>{
-    let {tasks} = this.state;
+  // onSubmit = (data) =>{
+  //   let {tasks} = this.state;
 
-    if(data.id === ''){ // add new
-      data.id = this.genId();
-      tasks.push(data);
+  //   if(data.id === ''){ // add new
+  //     data.id = this.genId();
+  //     tasks.push(data);
      
-    }else{
-      let index = this.findIndex(data.id); //edit 
-      tasks[index] = data;
-    }
+  //   }else{
+  //     let index = this.findIndex(data.id); //edit 
+  //     tasks[index] = data;
+  //   }
 
-    this.setState({
-      tasks : tasks,
-      isDisplayForm: false,
-      taskEditing : null
-    })
-    localStorage.setItem('tasks',JSON.stringify(tasks))   
-  }
+  //   this.setState({
+  //     tasks : tasks,
+  //     isDisplayForm: false,
+  //     taskEditing : null
+  //   })
+  //   localStorage.setItem('tasks',JSON.stringify(tasks))   
+  // }
 
   onUpdateStatus =(id)=>{
     let {tasks} = this.state
@@ -196,12 +201,15 @@ class App extends Component {
   render() {
     let { 
       //tasks, 
-      isDisplayForm, 
+      //isDisplayForm, 
       taskEditing, 
       filter, 
       keyword,
       sortBy,
       sortValue } = this.state;
+
+    let {
+      isDisplayForm } = this.props;
     
     //quick filter function by Name /Status
     // if(filter){
@@ -243,10 +251,10 @@ class App extends Component {
       //   })
       //  }
 
-    let elmTaskform  = isDisplayForm? 
+    let elmTaskform  = isDisplayForm ? 
                       <TaskForm 
-                        onCloseForm = {this.onCloseForm} 
-                        onSubmit = {this.onSubmit}
+                       // onCloseForm = {this.onCloseForm} 
+                       // onSubmit = {this.onSubmit}
                         taskEditing = {taskEditing}
                       /> 
                       : '';
@@ -259,17 +267,17 @@ class App extends Component {
         </div>
 
         <div className="row">
-          <div className={ this.state.isDisplayForm ? 'col-xs-4 col-sm-4 col-md-4 col-lg-4': ''}>
+          <div className={ isDisplayForm ? 'col-xs-4 col-sm-4 col-md-4 col-lg-4': ''}>
           {elmTaskform}
           </div>       
 
-          <div className={ this.state.isDisplayForm ? 'col-xs-8 col-sm-8 col-md-8 col-lg-8' : 'col-xs-12 col-sm-12 col-md-12 col-lg-12'}>
+          <div className={ isDisplayForm ? 'col-xs-8 col-sm-8 col-md-8 col-lg-8' : 'col-xs-12 col-sm-12 col-md-12 col-lg-12'}>
      
             <div className="row">
                 <button 
                   type="button" 
                   className="btn btn-primary float-left"
-                  onClick = { this.onToogleForm }
+                  onClick = { this.onToggleForm }
                   >
                    <i className="fas fa-plus"></i> Add a task
                 </button>
@@ -313,4 +321,17 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return{
+    isDisplayForm : state.isDisplayForm
+  }
+}
+
+const mapDispatchToProps = (dispatch, props)=>{
+  return {
+    onToggleForm : ()=>{
+      dispatch(actions.toggleForm())
+    }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);
