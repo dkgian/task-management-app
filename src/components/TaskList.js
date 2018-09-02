@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import '../App.css';
 import TaskItem from './TaskItem';
 
+import { connect } from 'react-redux'
+
 
 class TaskList extends Component {
    
@@ -32,6 +34,7 @@ class TaskList extends Component {
   render() {
     //var tasks = JSON.parse(this.props.tasks);
     let {tasks} = this.props;
+    console.log(tasks)
     let {filterName, filterStatus} = this.setState;
   
     var elmTaskItems = tasks.map((task,index)=>{
@@ -91,4 +94,10 @@ class TaskList extends Component {
   }
 }
 
-export default TaskList;
+const mapStateToProps = (state) => {
+  return {
+    tasks : state.tasks
+  }
+}
+
+export default connect(mapStateToProps, null)(TaskList);

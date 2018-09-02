@@ -152,6 +152,7 @@ class App extends Component {
     }
     return confirm
   }
+  // Generate data
   // onGenerateData = () =>{
   //   var tasks = [
   //     {
@@ -301,7 +302,7 @@ class App extends Component {
                      
               <TaskList 
                 //tasks = {localStorage.getItem('tasks')}
-                tasks = {tasks}
+                //tasks = {tasks}
                 onUpdateStatus = { this.onUpdateStatus }
                 onDeleteTask = { this.onDeleteTask }
                 onUpdate = {this.onUpdate}
