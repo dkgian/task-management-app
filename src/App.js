@@ -74,17 +74,17 @@ class App extends Component {
   //   localStorage.setItem('tasks',JSON.stringify(tasks))   
   // }
 
-  onUpdateStatus =(id)=>{
-    let {tasks} = this.state
-    let index = this.findIndex(id);
-    if(index !== -1){
-      tasks[index].status = !tasks[index].status
-      this.setState({
-        tasks: tasks
-      })
-    }
-    localStorage.setItem('tasks',JSON.stringify(tasks))
-  }
+  // onUpdateStatus =(id)=>{
+  //   let {tasks} = this.state
+  //   let index = this.findIndex(id);
+  //   if(index !== -1){
+  //     tasks[index].status = !tasks[index].status
+  //     this.setState({
+  //       tasks: tasks
+  //     })
+  //   }
+  //   localStorage.setItem('tasks',JSON.stringify(tasks))
+  // }
 
   onDeleteTask = (id) =>{
     let {tasks} = this.state;
@@ -203,8 +203,8 @@ class App extends Component {
       //tasks, 
       //isDisplayForm, 
       taskEditing, 
-      filter, 
-      keyword,
+      // filter, 
+      // keyword,
       sortBy,
       sortValue } = this.state;
 
@@ -306,7 +306,7 @@ class App extends Component {
               <TaskList 
                 //tasks = {localStorage.getItem('tasks')}
                 //tasks = {tasks}
-                onUpdateStatus = { this.onUpdateStatus }
+                //onUpdateStatus = { this.onUpdateStatus }
                 onDeleteTask = { this.onDeleteTask }
                 onUpdate = {this.onUpdate}
                 onFilter = {this.onFilter}
