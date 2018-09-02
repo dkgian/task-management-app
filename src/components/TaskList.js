@@ -34,7 +34,6 @@ class TaskList extends Component {
   render() {
     //var tasks = JSON.parse(this.props.tasks);
     let {tasks} = this.props;
-    console.log(tasks)
     let {filterName, filterStatus} = this.setState;
   
     var elmTaskItems = tasks.map((task,index)=>{
@@ -94,7 +93,7 @@ class TaskList extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     tasks : state.tasks
   }

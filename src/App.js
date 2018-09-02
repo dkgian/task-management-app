@@ -191,12 +191,7 @@ class App extends Component {
   //   }
   // }
 
-  s4 = ()=>{
-    return Math.floor((1+Math.random())*0x10000).toString(16).substring(1);
-  }
-  genId = () => {
-    return this.s4() +'-'+ this.s4() + '-' + this.s4() + '-' + this.s4();
-  }
+ 
 
   render() {
     let { 
@@ -250,7 +245,7 @@ class App extends Component {
 
     let elmTaskform  = isDisplayForm? 
                       <TaskForm 
-                        onCloseForm = {this.onToogleForm} 
+                        onCloseForm = {this.onCloseForm} 
                         onSubmit = {this.onSubmit}
                         taskEditing = {taskEditing}
                       /> 

@@ -9,7 +9,7 @@ class SortControl extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        console.log(nextProps)
+        //console.log(nextProps)
     }
 
   render() {
