@@ -10,7 +10,7 @@ class App extends Component {
     super(props);
     this.state = {
       isDisplayForm : false,
-      tasks : [], //id, name, status, 
+      //tasks : [], //id, name, status, 
       taskEditing : null,
       filter: {
         name:'',
@@ -181,15 +181,15 @@ class App extends Component {
   // }
 
   //this func runs before the component is mounted
-  componentWillMount(){
-    //check and get back data from Localstorage
-    if(localStorage && localStorage.getItem('tasks')){
-      var tasks = JSON.parse(localStorage.getItem('tasks'));
-      this.setState({
-        tasks : tasks
-      })
-    }
-  }
+  // componentWillMount(){
+  //   //check and get back data from Localstorage
+  //   if(localStorage && localStorage.getItem('tasks')){
+  //     var tasks = JSON.parse(localStorage.getItem('tasks'));
+  //     this.setState({
+  //       tasks : tasks
+  //     })
+  //   }
+  // }
 
   s4 = ()=>{
     return Math.floor((1+Math.random())*0x10000).toString(16).substring(1);
@@ -200,7 +200,7 @@ class App extends Component {
 
   render() {
     let { 
-      tasks, 
+      //tasks, 
       isDisplayForm, 
       taskEditing, 
       filter, 
@@ -209,48 +209,48 @@ class App extends Component {
       sortValue } = this.state;
     
     //quick filter function by Name /Status
-    if(filter){
-      //filter by name
-      if(filter.name){
-        tasks = tasks.filter((task)=>{
-          return task.name.toLowerCase().indexOf(filter.name) !== -1 //-1: not found match keys
-        })
-      }
-      //filter by status
-      tasks = tasks.filter((task)=>{
-        if(filter.status === -1){
-          return task
-        }else{
-          return task.status === (filter.status === 1 ? true : false)
-        }
-      })
-    }
+    // if(filter){
+    //   //filter by name
+    //   if(filter.name){
+    //     tasks = tasks.filter((task)=>{
+    //       return task.name.toLowerCase().indexOf(filter.name) !== -1 //-1: not found match keys
+    //     })
+    //   }
+    //   //filter by status
+    //   tasks = tasks.filter((task)=>{
+    //     if(filter.status === -1){
+    //       return task
+    //     }else{
+    //       return task.status === (filter.status === 1 ? true : false)
+    //     }
+    //   })
+    // }
 
     //Search by Keyword
-    if(keyword){
-      tasks = tasks.filter((task)=>{
-        return task.name.toLowerCase().indexOf(keyword) !== -1;
-      })
-    }
+    // if(keyword){
+    //   tasks = tasks.filter((task)=>{
+    //     return task.name.toLowerCase().indexOf(keyword) !== -1;
+    //   })
+    // }
 
     //Sort items
-       if(sortBy === 'name'){ //byName
-         tasks.sort((a,b)=>{
-           if(a.name > b.name) return sortValue
-           else if(a.name < b.name) return -sortValue
-           else return 0
-         })
-       }else{
-        tasks.sort((a,b)=>{ //byStatus
-          if(a.status > b.status) return -sortValue
-          else if(a.status < b.status) return sortValue
-          else return 0
-        })
-       }
+      //  if(sortBy === 'name'){ //byName
+      //    tasks.sort((a,b)=>{
+      //      if(a.name > b.name) return sortValue
+      //      else if(a.name < b.name) return -sortValue
+      //      else return 0
+      //    })
+      //  }else{
+      //   tasks.sort((a,b)=>{ //byStatus
+      //     if(a.status > b.status) return -sortValue
+      //     else if(a.status < b.status) return sortValue
+      //     else return 0
+      //   })
+      //  }
 
     let elmTaskform  = isDisplayForm? 
                       <TaskForm 
-                        onCloseForm ={this.onToogleForm} 
+                        onCloseForm = {this.onToogleForm} 
                         onSubmit = {this.onSubmit}
                         taskEditing = {taskEditing}
                       /> 

@@ -9,7 +9,10 @@ import { Provider } from 'react-redux'
 
 import appReducer from './reducers/index';
 
-const appStore = createStore(appReducer)
+const appStore = createStore(appReducer,
+                         window.__REDUX_DEVTOOLS_EXTENSION__ && 
+                         window.__REDUX_DEVTOOLS_EXTENSION__()
+                        )
 
 ReactDOM.render(
     <Provider store={ appStore }>
