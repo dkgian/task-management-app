@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import '../App.css';
 
- 
 class SortControl extends Component {
 
-    onClick = (sortBy, sortValue)=>{
+    onClick = (sortBy, sortValue) => {
         this.props.onSort(sortBy, sortValue)
     }
 
     componentWillReceiveProps(nextProps){
-        //console.log(nextProps)
+        
     }
 
   render() {
@@ -60,12 +59,11 @@ class SortControl extends Component {
                             style = {{cursor: 'pointer'}}
                             onClick= {()=> this.onClick('status',-1)}
                         > Deactive</li>
-                    </a>
-                    
+                    </a>      
                 </ul>
             </div>
         </div> 
-    );
+    )
   }
 }
 

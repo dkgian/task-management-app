@@ -1,39 +1,27 @@
-import * as types from './../constants/ActionTypes'
+import * as types from '../constants/ActionTypes';
 
-export const listAll = () => {
-    return {
-        type: types.LIST_ALL 
-    }
-}
+export const listAll = () => ({
+  type: types.LIST_ALL,
+});
 
-export const addTask = (task) =>{
-    return {
-        type : types.ADD_TASK,
-        task //:task
-    }
-}
+export const addTask = task => ({
+  type: types.ADD_TASK,
+  task,
+});
 
-export const toggleForm = () =>{
-    return {
-        type: types.TOGGLE_FORM
-    }
-}
+export const toggleForm = () => ({
+  type: types.TOGGLE_FORM,
+});
 
-export const closeForm = () =>{
-    return {
-        type: types.CLOSE_FORM
-    }
-}
+export const closeForm = () => ({
+  type: types.CLOSE_FORM,
+});
 
-export const openForm = () =>{
-    return {
-        type: types.OPEN_FORM
-    }
-}
+export const openForm = () => ({
+  type: types.OPEN_FORM,
+});
 
-export const updateStatus = (id) =>{
-    return {
-        type: types.UPDATE_STATUS_TASK,
-        id //:id
-    }
-}
+export const updateStatus = id => ({
+  type: types.UPDATE_STATUS_TASK,
+  id,
+});

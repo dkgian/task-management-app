@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 import TaskItem from './TaskItem';
 
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
 
 class TaskList extends Component {
@@ -12,8 +12,8 @@ class TaskList extends Component {
     this.state = {
       filterName: '',
       filterStatus: -1  // -1:all, 1: active, 0: deactive
-    }
-  }
+    }   
+  } 
 
   onChange = (event)=>{
     let name = event.target.name;
@@ -27,8 +27,6 @@ class TaskList extends Component {
     this.setState({
       [name]: value //setState filterName, filterStatus
     })
-
-
   }
 
   render() {
@@ -49,7 +47,7 @@ class TaskList extends Component {
       )
     })
     return ( 
-        <table className="table table-bordered table-hover">
+      <table className="table table-bordered table-hover">
         <thead className="text-center">
           <tr>
             <th>Index</th>

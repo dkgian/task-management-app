@@ -4,18 +4,17 @@ import '../App.css';
 import * as actions from './../actions/index'
 
 import {connect} from 'react-redux'
-class TaskItem extends Component {
 
-  onUpdateStatus = () =>{
-    //this.props.onUpdateStatus(this.props.task.id)
+class TaskItem extends Component {
+  onUpdateStatus = () => {
     this.props.onUpdateStatus(this.props.task.id)
   }
 
-  onDeleteTask = () =>{
+  onDeleteTask = () => {
     this.props.onDeleteTask(this.props.task.id)
   }
 
-  onUpdate = () =>{
+  onUpdate = () => {
     this.props.onUpdate(this.props.task.id)
   }
 

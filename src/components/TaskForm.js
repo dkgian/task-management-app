@@ -15,9 +15,7 @@ class Taskform extends Component {
       status: false
     }
   }
-
-
-  //edit mode: load edited item to Component
+  
   componentWillMount = ()=>{
     if(this.props.taskEditing !== null){
       this.setState({
@@ -28,7 +26,6 @@ class Taskform extends Component {
     }
   }
 
-  //check props whether editmode or addnew mode for choose data to load into form
   componentWillReceiveProps=(nextProps)=>{
     if(nextProps && nextProps.taskEditing){
       this.setState({
@@ -45,7 +42,7 @@ class Taskform extends Component {
     }
   }
 
-  onCloseForm = ()=>{
+  onCloseForm = () => {
     this.props.onCloseForm();
   }
   onChange = (event) => {
@@ -130,8 +127,7 @@ const mapStateToProps = state =>{
 }
 
 const mapDispatchToProps = (dispatch, props)=>{
-  //return Obj{ key: taskName, value: function(){dispatch(action)}}
-  return {
+   return {
     onAddTask : (task)=>{
       dispatch(actions.addTask(task));
     },
