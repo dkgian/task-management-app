@@ -10,7 +10,7 @@ class App extends Component {
     super(props);
     this.state = {
       isDisplayForm : false,
-      tasks : [], //id, name, status, 
+      tasks : [], // {id, name, status},
       taskEditing : null,
       filter: {
         name:'',
@@ -55,9 +55,9 @@ class App extends Component {
     if(data.id === ''){ // add new
       data.id = this.genId();
       tasks.push(data);
-     
+
     }else{
-      let index = this.findIndex(data.id); //edit 
+      let index = this.findIndex(data.id); //edit
       tasks[index] = data;
     }
 
@@ -66,7 +66,7 @@ class App extends Component {
       isDisplayForm: false,
       taskEditing : null
     })
-    localStorage.setItem('tasks',JSON.stringify(tasks))   
+    localStorage.setItem('tasks',JSON.stringify(tasks))
   }
 
   onUpdateStatus =(id)=>{
@@ -152,34 +152,6 @@ class App extends Component {
     }
     return confirm
   }
-  // onGenerateData = () =>{
-  //   var tasks = [
-  //     {
-  //       id: this.genId(),
-  //       name: 'Task 1',
-  //       status: true
-  //     },
-  //     {
-  //       id: this.genId(),
-  //       name: 'Task 2',
-  //       status: false
-  //     },
-  //     {
-  //       id: this.genId(),
-  //       name: 'Task 3',
-  //       status: true
-  //     }
-  //   ]
-
-  //   this.setState({
-  //     tasks : tasks
-  //   });
-
-  //   localStorage.setItem('tasks',JSON.stringify(tasks));
-    
-  // }
-
-  //this func runs before the component is mounted
   componentWillMount(){
     //check and get back data from Localstorage
     if(localStorage && localStorage.getItem('tasks')){
@@ -198,15 +170,15 @@ class App extends Component {
   }
 
   render() {
-    let { 
-      tasks, 
-      isDisplayForm, 
-      taskEditing, 
-      filter, 
+    let {
+      tasks,
+      isDisplayForm,
+      taskEditing,
+      filter,
       keyword,
       sortBy,
       sortValue } = this.state;
-    
+
     //quick filter function by Name /Status
     if(filter){
       //filter by name
@@ -247,15 +219,15 @@ class App extends Component {
         })
        }
 
-    let elmTaskform  = isDisplayForm? 
-                      <TaskForm 
-                        onCloseForm ={this.onToogleForm} 
+    let elmTaskform  = isDisplayForm?
+                      <TaskForm
+                        onCloseForm ={this.onToogleForm}
                         onSubmit = {this.onSubmit}
                         taskEditing = {taskEditing}
-                      /> 
+                      />
                       : '';
 
-    return ( 
+    return (
       <div className="App container">
         <div>
           <h1>Tasks Management</h1>
@@ -265,41 +237,41 @@ class App extends Component {
         <div className="row">
           <div className={ this.state.isDisplayForm ? 'col-xs-4 col-sm-4 col-md-4 col-lg-4': ''}>
           {elmTaskform}
-          </div>       
+          </div>
 
           <div className={ this.state.isDisplayForm ? 'col-xs-8 col-sm-8 col-md-8 col-lg-8' : 'col-xs-12 col-sm-12 col-md-12 col-lg-12'}>
-     
+
             <div className="row">
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="btn btn-primary float-left"
                   onClick = { this.onToogleForm }
                   >
                    <i className="fas fa-plus"></i> Add a task
                 </button>
-                
-                {/* <button 
-                  type="button" 
+
+                {/* <button
+                  type="button"
                   className="btn btn-danger float-left"
                   onClick={this.onGenerateData}
                   >
                   Generate Data
                 </button> */}
-                
+
             </div>
 
-            <div className="row mt-15 ">  
+            <div className="row mt-15 ">
               <Control
                 onSearch = {this.onSearch}
                 onSort = { this.onSort }
                 sortBy = { sortBy}
                 sortValue = { sortValue}
-                />  
+                />
             </div>
-            
+
             <div className="row mt-15">
-                     
-              <TaskList 
+
+              <TaskList
                 //tasks = {localStorage.getItem('tasks')}
                 tasks = {tasks}
                 onUpdateStatus = { this.onUpdateStatus }
@@ -307,9 +279,9 @@ class App extends Component {
                 onUpdate = {this.onUpdate}
                 onFilter = {this.onFilter}
               />
-        
+
             </div>
-          </div>         
+          </div>
         </div>
       </div>
 
