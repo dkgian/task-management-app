@@ -9,16 +9,15 @@ class SearchControl extends Component {
             keyword:''
         }
     }
-
-    onChange = (event)=>{
-        //let name = event.target.name;
+    
+    onChange = (event) => {
         let value = event.target.value;
         this.setState({
             keyword: value
         })    
     }
 
-    onSearch = ()=>{
+    onSearch = () => {
         this.props.onSearch(this.state.keyword)
     }
 

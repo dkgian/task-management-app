@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import '../App.css';
 
+import { connect} from 'react-redux'
+
+import * as actions from './../actions/index'
+
 class Taskform extends Component {
 
   constructor(props){
@@ -11,9 +15,7 @@ class Taskform extends Component {
       status: false
     }
   }
-
-
-  //edit mode: load edited item to Component
+  
   componentWillMount = ()=>{
     if(this.props.taskEditing !== null){
       this.setState({
@@ -24,7 +26,6 @@ class Taskform extends Component {
     }
   }
 
-  //check props whether editmode or addnew mode for choose data to load into form
   componentWillReceiveProps=(nextProps)=>{
     if(nextProps && nextProps.taskEditing){
       this.setState({
@@ -41,6 +42,9 @@ class Taskform extends Component {
     }
   }
 
+  onCloseForm = () => {
+    this.props.onCloseForm();
+  }
   onChange = (event) => {
     let name = event.target.name;
     let value = event.target.value;
@@ -57,7 +61,9 @@ class Taskform extends Component {
     event.preventDefault();
     //Cast boolean before passing to App
     //this.props.onSubmit(this.state.name, this.state.status === "true"? true:false);
-    this.props.onSubmit(this.state)
+    
+    this.props.onAddTask(this.state);
+    this.onCloseForm();
   }
 
 
@@ -70,7 +76,7 @@ class Taskform extends Component {
                 { id !== '' ? 'Edit Task': 'Add Task' }
                 <span 
                 style = { {cursor:'pointer'} }
-                onClick = { this.props.onCloseForm }
+                onClick = { this.onCloseForm}
                 className="fa fa-times-circle float-right"></span>
               </h3>
             </div>
@@ -115,4 +121,20 @@ class Taskform extends Component {
   }
 }
 
-export default Taskform;
+const mapStateToProps = state =>{
+  return {
+  }
+}
+
+const mapDispatchToProps = (dispatch, props)=>{
+   return {
+    onAddTask : (task)=>{
+      dispatch(actions.addTask(task));
+    },
+    onCloseForm : ()=>{
+      dispatch(actions.closeForm());
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Taskform);
